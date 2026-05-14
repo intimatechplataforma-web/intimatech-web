@@ -2,14 +2,17 @@ export async function onRequest(context) {
   const { request, next, env } = context;
   const url = new URL(request.url);
 
-  // Hostname-based routing for custom subdomains
-  if (url.hostname === 'assinatura.intimatech.com.br' && !url.pathname.startsWith('/assinatura')) {
-    url.pathname = '/assinatura' + (url.pathname === '/' ? '/index.html' : url.pathname);
-    return next(new Request(url.toString(), request));
-  }
-  if (url.hostname === 'cadastro.intimatech.com.br' && !url.pathname.startsWith('/cadastro')) {
-    url.pathname = '/cadastro' + (url.pathname === '/' ? '/index.html' : url.pathname);
-    return next(new Request(url.toString(), request));
+  // Hostname-based routing for custom subdomains (skip static assets)
+  const isAsset = /\.(js|css|png|jpg|jpeg|gif|svg|ico|woff2?|ttf|eot|map|json|webp|avif|mp4|webm|pdf|xml|txt)$/i.test(url.pathname);
+  if (!isAsset) {
+    if (url.hostname === 'assinatura.intimatech.com.br' && !url.pathname.startsWith('/assinatura')) {
+      url.pathname = '/assinatura' + (url.pathname === '/' ? '/index.html' : url.pathname);
+      return next(new Request(url.toString(), request));
+    }
+    if (url.hostname === 'cadastro.intimatech.com.br' && !url.pathname.startsWith('/cadastro')) {
+      url.pathname = '/cadastro' + (url.pathname === '/' ? '/index.html' : url.pathname);
+      return next(new Request(url.toString(), request));
+    }
   }
 
   // Only intercept HTML page requests, skip static assets, API endpoints,
