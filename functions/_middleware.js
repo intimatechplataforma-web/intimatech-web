@@ -2,6 +2,16 @@ export async function onRequest(context) {
   const { request, next, env } = context;
   const url = new URL(request.url);
 
+  // Hostname-based routing for custom subdomains
+  if (url.hostname === 'assinatura.intimatech.com.br' && !url.pathname.startsWith('/assinatura')) {
+    url.pathname = '/assinatura' + (url.pathname === '/' ? '/index.html' : url.pathname);
+    return next(new Request(url.toString(), request));
+  }
+  if (url.hostname === 'cadastro.intimatech.com.br' && !url.pathname.startsWith('/cadastro')) {
+    url.pathname = '/cadastro' + (url.pathname === '/' ? '/index.html' : url.pathname);
+    return next(new Request(url.toString(), request));
+  }
+
   // Only intercept HTML page requests, skip static assets, API endpoints,
   // and the operator-facing dashboard (we don't want tracking cookies set
   // when an admin checks metrics).

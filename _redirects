@@ -1,2 +1,1 @@
-https://assinatura.intimatech.com.br/ https://assinatura.intimatech.com.br/assinatura/ 301
-https://assinatura.intimatech.com.br/assinatura/* https://assinatura.intimatech.com.br/assinatura/:splat 200
+# Routing handled by functions/_middleware.js
