@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IntimaTech — Plataforma Médica Online</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:        #0f1d45;
+      --navy-mid:    #1a3068;
+      --gold:        #c9a437;
+      --gold-light:  #fdf6e3;
+      --gold-border: rgba(201,164,55,.28);
+      --text:        #0f1d45;
+      --muted:       #5c6b8a;
+      --border:      #dde3ef;
+      --bg:          #f7f9fc;
+      --white:       #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--white); color: var(--text); }
+
+    .container { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      background: var(--navy); color: rgba(255,255,255,.6);
+      font-size: .67rem; font-weight: 600; letter-spacing: .09em;
+      text-align: center; padding: 8px 16px; text-transform: uppercase;
+    }
+    .topbar strong { color: var(--gold); }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--white); border-bottom: 1px solid var(--border);
+      padding: 13px 32px; display: flex; align-items: center; justify-content: center;
+      position: sticky; top: 0; z-index: 50;
+      box-shadow: 0 1px 8px rgba(15,29,69,.06);
+    }
+    .logo-wrap { display: flex; align-items: center; gap: 12px; }
+    .logo-img  { height: 44px; width: auto; }
+    .logo-name { font-size: 1.05rem; font-weight: 800; letter-spacing: -.03em; color: var(--navy); line-height: 1.1; }
+    .logo-name span { color: var(--gold); }
+    .logo-sub  { font-size: .58rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-top: 1px; }
+
+    /* ── HERO ── */
+    .hero { padding: 80px 0 72px; text-align: center; border-bottom: 1px solid var(--border); }
+    .badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--gold-light); color: var(--gold);
+      font-size: .67rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      padding: 5px 14px; border-radius: 999px; border: 1px solid var(--gold-border);
+      margin-bottom: 26px;
+    }
+    .badge::before { content:''; width:6px; height:6px; background:var(--gold); border-radius:50%; animation:pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+    .hero h1 {
+      font-size: clamp(1.7rem, 5vw, 3rem); font-weight: 900;
+      line-height: 1.12; letter-spacing: -.05em; color: var(--navy);
+      max-width: 780px; margin: 0 auto 18px;
+      word-break: keep-all; overflow-wrap: normal;
+    }
+    .hero h1 em { font-style: normal; color: var(--gold); }
+
+    .hero-sub {
+      font-size: 1.05rem; color: var(--muted); line-height: 1.75;
+      max-width: 580px; margin: 0 auto 36px;
+    }
+
+    @keyframes shimmer {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .cta-btn {
+      display: inline-block; color: var(--white);
+      font-size: .98rem; font-weight: 700; font-family: inherit;
+      text-decoration: none; padding: 17px 42px; border-radius: 12px;
+      letter-spacing: .04em;
+      background: linear-gradient(120deg, #0f1d45, #1a3068, #c9a437, #1a3068, #0f1d45);
+      background-size: 300% 300%;
+      animation: shimmer 5s ease infinite;
+      box-shadow: 0 6px 28px rgba(15,29,69,.3);
+      transition: box-shadow .18s, transform .1s;
+      position: relative;
+    }
+    .cta-btn:hover { box-shadow: 0 8px 32px rgba(15,29,69,.4); }
+    .cta-btn:active { transform: scale(.98); }
+
+    .hero-note { margin-top: 14px; font-size: .72rem; color: #9aa3b8; display:flex; align-items:center; justify-content:center; gap:5px; }
+
+    /* ── SEÇÕES ── */
+    .section { padding: 72px 0; }
+    .section-alt { background: var(--bg); }
+
+    .section-tag {
+      font-size: .67rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 10px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .section-tag::before { content:''; display:block; width:22px; height:2px; background:var(--gold); border-radius:2px; }
+    .section-title { font-size: clamp(1.45rem, 3vw, 1.9rem); font-weight: 800; letter-spacing: -.04em; color: var(--navy); margin-bottom: 12px; line-height: 1.2; }
+    .section-sub   { font-size: .9rem; color: var(--muted); line-height: 1.75; max-width: 520px; }
+
+    /* ── FEATURES ── */
+    .features-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 36px;
+    }
+    .feat-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 14px; padding: 22px 20px;
+      transition: box-shadow .18s, border-color .18s;
+    }
+    .feat-card:hover { box-shadow: 0 6px 22px rgba(15,29,69,.08); border-color: var(--gold-border); }
+    .feat-icon {
+      width: 40px; height: 40px; background: var(--gold-light); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; margin-bottom: 13px;
+    }
+    .feat-card h3 { font-size: .86rem; font-weight: 700; color: var(--navy); margin-bottom: 5px; }
+    .feat-card p  { font-size: .76rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── PROFESSORES ── */
+    .prof-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 36px; }
+    .prof-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 14px; padding: 20px 18px;
+      display: flex; align-items: center; gap: 13px;
+    }
+    .prof-avatar {
+      width: 52px; height: 52px; flex-shrink: 0;
+      border-radius: 50%; overflow: hidden;
+      border: 2px solid var(--gold-border);
+    }
+    .prof-avatar img {
+      width: 100%; height: 100%; object-fit: cover; object-position: top;
+      display: block;
+    }
+    .prof-name { font-size: .84rem; font-weight: 700; color: var(--navy); line-height: 1.3; }
+    .prof-spec { font-size: .7rem; color: var(--muted); margin-top: 2px; }
+
+    .prof-guests {
+      grid-column: 1 / -1;
+      display: flex; align-items: center; gap: 12px;
+      background: var(--gold-light); border: 1.5px dashed var(--gold-border);
+      border-radius: 14px; padding: 18px 22px;
+      margin-top: 2px;
+    }
+    .prof-guests-icon {
+      width: 46px; height: 46px; flex-shrink: 0;
+      background: var(--white); border: 1.5px solid var(--gold-border);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    }
+    .prof-guests-text strong { font-size: .86rem; font-weight: 700; color: var(--navy); display: block; }
+    .prof-guests-text span   { font-size: .72rem; color: var(--muted); }
+
+    /* ── DOIS COLUNAS ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 52px; align-items: start; }
+
+    .check-list { list-style: none; margin-top: 22px; display: flex; flex-direction: column; gap: 11px; }
+    .check-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: .87rem; color: var(--text); line-height: 1.55;
+    }
+    .check-list li::before {
+      content:''; display:block; flex-shrink:0;
+      width:18px; height:18px; margin-top:1px;
+      background: var(--gold-light) url("data:image/svg+xml,%3Csvg width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23c9a437' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") no-repeat center / 10px;
+      border-radius:50%; border:1.5px solid var(--gold-border);
+    }
+
+    /* ── PRICE ── */
+    .price-section { background: var(--navy); padding: 80px 0; text-align: center; }
+    .price-section .section-tag { justify-content: center; color: var(--gold); }
+    .price-section .section-tag::before { background: var(--gold); }
+    .price-section .section-title { color: var(--white); margin: 0 auto 8px; }
+    .price-section .section-sub   { color: rgba(255,255,255,.5); margin: 0 auto 40px; }
+
+    .price-card {
+      background: var(--white); border: 1px solid var(--gold-border);
+      border-radius: 20px; padding: 40px 34px;
+      max-width: 400px; margin: 0 auto;
+      box-shadow: 0 24px 64px rgba(0,0,0,.22);
+      position: relative; overflow: hidden;
+    }
+    .price-card::before {
+      content:''; position:absolute; top:0; left:0; right:0;
+      height:3px; background: linear-gradient(90deg, var(--gold), #e8c96a, var(--gold));
+    }
+    .price-label { font-size: .67rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+    .price-value { font-size: 3rem; font-weight: 900; letter-spacing: -.05em; color: var(--navy); line-height: 1; }
+    .price-value sup { font-size: 1.2rem; vertical-align: top; margin-top: .4rem; font-weight: 700; }
+    .price-value sub { font-size: .9rem; font-weight: 600; vertical-align: bottom; }
+    .price-period { font-size: .78rem; color: var(--muted); margin-top: 5px; }
+    .price-avista { font-size: .75rem; color: var(--muted); margin-top: 4px; margin-bottom: 22px; }
+    .price-avista strong { color: var(--navy); }
+    .price-divider { height: 1px; background: var(--border); margin: 20px 0; }
+    .price-includes { list-style: none; display: flex; flex-direction: column; gap: 10px; text-align: left; margin-bottom: 26px; }
+    .price-includes li {
+      display: flex; align-items: center; gap: 10px;
+      font-size: .81rem; color: var(--text);
+    }
+    .price-includes li::before {
+      content:''; display:block; flex-shrink:0; width:16px; height:16px;
+      background: var(--gold-light) url("data:image/svg+xml,%3Csvg width='9' height='9' viewBox='0 0 24 24' fill='none' stroke='%23c9a437' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") no-repeat center / 9px;
+      border-radius:50%; border:1.5px solid var(--gold-border);
+    }
+    .price-cta {
+      display: block; width: 100%; color: var(--white);
+      font-size: .95rem; font-weight: 700; font-family: inherit;
+      text-decoration: none; text-align: center; padding: 15px 24px; border-radius: 10px;
+      letter-spacing: .04em;
+      background: linear-gradient(120deg, #0f1d45, #1a3068, #c9a437, #1a3068, #0f1d45);
+      background-size: 300% 300%;
+      animation: shimmer 5s ease infinite;
+      box-shadow: 0 4px 20px rgba(15,29,69,.22);
+      transition: box-shadow .18s, transform .1s;
+    }
+    .price-cta:hover { box-shadow: 0 6px 26px rgba(15,29,69,.32); }
+    .price-cta:active { transform: scale(.98); }
+    .price-note { font-size: .67rem; color: rgba(255,255,255,.3); text-align: center; margin-top: 18px; }
+
+    /* ── FOOTER ── */
+    .footer-social {
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .social-btn {
+      display: inline-flex; align-items: center; gap: 9px;
+      padding: 11px 22px; border-radius: 10px;
+      font-size: .82rem; font-weight: 600; font-family: inherit;
+      text-decoration: none; border: 1.5px solid var(--border);
+      color: var(--navy); background: var(--white);
+      transition: border-color .18s, background .18s, box-shadow .18s;
+    }
+    .social-btn:hover {
+      border-color: var(--gold-border);
+      background: var(--gold-light);
+      box-shadow: 0 3px 12px rgba(15,29,69,.07);
+    }
+    .social-btn svg { flex-shrink: 0; }
+
+    footer { text-align: center; padding: 16px 24px; border-top: 1px solid var(--border); font-size: .67rem; color: #b0b9cc; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .features-grid { grid-template-columns: 1fr; gap: 12px; }
+      .prof-grid     { grid-template-columns: 1fr; gap: 10px; }
+      .two-col       { grid-template-columns: 1fr; gap: 36px; }
+    }
+    @media (max-width: 480px) {
+      header { padding: 11px 18px; }
+      .logo-img { height: 36px; }
+      .hero { padding: 48px 0 44px; }
+      .hero h1 { font-size: 1.65rem; letter-spacing: -.03em; }
+      .hero h1 br { display: none; }
+      .hero-sub { font-size: .92rem; }
+      .section { padding: 52px 0; }
+      .price-card { padding: 30px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <strong>IntimaTech</strong>&nbsp;&nbsp;·&nbsp;&nbsp;Plataforma Médica Online
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="logo-wrap">
+    <img class="logo-img" src="../logo da intimatech/ChatGPT_Image_14_de_mai._de_2026,_13_47_37.png" alt="IntimaTech" />
+    <div>
+      <div class="logo-name">Intima<span>Tech</span></div>
+      <div class="logo-sub">Ciência e Tecnologia Íntima</div>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="badge">Exclusivo para médicos</div>
+    <h1>Atualização contínua em<br><em>Ciência e Tecnologia Íntima.</em></h1>
+    <p class="hero-sub">
+      Ciência, ética e prática real — um ecossistema estruturado de educação médica contínua com curadoria científica e os maiores especialistas da área no Brasil.
+    </p>
+    <a href="https://pay.herospark.com/assinatura-intimatech-503526" class="cta-btn" target="_blank">
+      QUERO ASSINAR AGORA →
+    </a>
+    <p class="hero-note">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#9aa3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Acesso imediato após a assinatura
+    </p>
+  </div>
+</section>
+
+<!-- O QUE TEM NA ASSINATURA -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-tag">O que você recebe</div>
+    <h2 class="section-title">Tudo incluso na assinatura</h2>
+    <p class="section-sub">Planejamento anual, curadoria científica e acesso progressivo ao que há de mais atualizado na medicina íntima.</p>
+
+    <div class="features-grid">
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9a437" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h3>2 aulas ao vivo por mês</h3>
+        <p>20 sessões ao vivo em 2026 com especialistas, abordando procedimentos, técnicas cirúrgicas e tecnologias da área.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9a437" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <h3>Biblioteca completa</h3>
+        <p>Acesso ao conteúdo gravado do ano atual e de anos anteriores — estude no seu ritmo, quando quiser.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9a437" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <h3>Planejamento anual</h3>
+        <p>Grade curricular estruturada com temas definidos para o ano — você sabe exatamente o que vai aprender.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9a437" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <h3>Até 70% de desconto em cursos</h3>
+        <p>Descontos exclusivos em cursos práticos e hands-on para assinantes da plataforma.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9a437" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Coordenação multidisciplinar</h3>
+        <p>Acesso a uma equipe de especialistas de diferentes áreas — ginecologia, urologia, dermatologia, proctologia e cirurgia plástica.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9a437" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h3>Comunidade científica</h3>
+        <p>Participe de uma rede médica exclusiva para trocar experiências, discutir casos e se conectar com colegas da especialidade.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROFESSORES -->
+<section class="section">
+  <div class="container">
+    <div class="section-tag">Corpo docente</div>
+    <h2 class="section-title">Quem vai te ensinar</h2>
+    <p class="section-sub">Especialistas com formação sólida e atuação clínica ativa na medicina da região íntima.</p>
+
+    <div class="prof-grid">
+      <div class="prof-card">
+        <div class="prof-avatar"><img src="../fotos dos profissionais/margel.jpg" alt="Dra. Margel Cantarelli" /></div>
+        <div>
+          <div class="prof-name">Dra. Margel Cantarelli</div>
+          <div class="prof-spec">Diretora · Ginecologia · Mestre UFSC</div>
+        </div>
+      </div>
+      <div class="prof-card">
+        <div class="prof-avatar"><img src="../fotos dos profissionais/valeria.jpg" alt="Dra. Valéria Guerra" /></div>
+        <div>
+          <div class="prof-name">Dra. Valéria Guerra</div>
+          <div class="prof-spec">Ginecologia · Medicina Estética</div>
+        </div>
+      </div>
+      <div class="prof-card">
+        <div class="prof-avatar"><img src="../fotos dos profissionais/ricardo.jpg" alt="Dr. Ricardo Kruse" /></div>
+        <div>
+          <div class="prof-name">Dr. Ricardo Kruse</div>
+          <div class="prof-spec">Cirurgia Plástica</div>
+        </div>
+      </div>
+      <div class="prof-card">
+        <div class="prof-avatar"><img src="../fotos dos profissionais/karla avelino.jpg" alt="Dra. Karla Avelino" /></div>
+        <div>
+          <div class="prof-name">Dra. Karla Avelino</div>
+          <div class="prof-spec">Urologia</div>
+        </div>
+      </div>
+      <div class="prof-card">
+        <div class="prof-avatar"><img src="../fotos dos profissionais/fabricio.jpg" alt="Dr. Fabrício Doin Paz" /></div>
+        <div>
+          <div class="prof-name">Dr. Fabrício Doin Paz</div>
+          <div class="prof-spec">Proctologia</div>
+        </div>
+      </div>
+      <div class="prof-card">
+        <div class="prof-avatar"><img src="../fotos dos profissionais/daniella.jpg" alt="Dra. Daniella Curi" /></div>
+        <div>
+          <div class="prof-name">Dra. Daniella Curi</div>
+          <div class="prof-spec">Dermatologia · Ginecologia</div>
+        </div>
+      <div class="prof-guests">
+        <div class="prof-guests-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9a437" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+        </div>
+        <div class="prof-guests-text">
+          <strong>+ Convidados especiais todos os meses</strong>
+          <span>Especialistas convidados trazem novos temas e perspectivas a cada edição</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUEM É / POR QUE ASSINAR -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="two-col">
+
+      <div>
+        <div class="section-tag">Para quem é</div>
+        <h2 class="section-title">Esta plataforma é para você</h2>
+        <ul class="check-list">
+          <li>Médicos que atuam ou desejam atuar na área íntima</li>
+          <li>Ginecologistas e obstetras em busca de atualização científica</li>
+          <li>Urologistas interessados em saúde íntima feminina e masculina</li>
+          <li>Dermatologistas que atendem patologias da região íntima</li>
+          <li>Cirurgiões plásticos com foco em procedimentos íntimos</li>
+          <li>Proctologistas e especialistas em áreas correlatas</li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="section-tag">Por que assinar</div>
+        <h2 class="section-title">O que muda na sua prática</h2>
+        <ul class="check-list">
+          <li>Curadoria científica rigorosa — sem modismo, com evidência</li>
+          <li>Aprenda injetáveis, radiofrequência, lasers, labioplastia e mais</li>
+          <li>Protocolos clínicos validados por quem vive a especialidade</li>
+          <li>Conteúdo em português, pensado para a realidade do Brasil</li>
+          <li>Estude ao vivo ou pelas gravações — no seu tempo</li>
+          <li>Diferencie-se com uma formação contínua e reconhecida</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PRICE BOX -->
+<section class="price-section">
+  <div class="container">
+    <div class="section-tag">Investimento</div>
+    <h2 class="section-title">Comece sua atualização hoje</h2>
+    <p class="section-sub">Acesso completo à plataforma, ao corpo docente e a todos os benefícios da assinatura.</p>
+
+    <div class="price-card">
+      <div class="price-label">Assinatura IntimaTech · Anual</div>
+      <div class="price-value"><sup>R$</sup>99<sub>,00</sub></div>
+      <div class="price-period">por mês · cobrado em 12x no cartão</div>
+      <div class="price-avista">ou <strong>R$ 1.188,00</strong> à vista</div>
+
+      <div class="price-divider"></div>
+
+      <ul class="price-includes">
+        <li>2 aulas ao vivo por mês (20 em 2026)</li>
+        <li>Biblioteca completa de gravações</li>
+        <li>Conteúdo de anos anteriores incluso</li>
+        <li>Planejamento anual com curadoria científica</li>
+        <li>Até 70% de desconto em cursos práticos</li>
+        <li>Acesso à comunidade médica especializada</li>
+      </ul>
+
+      <a href="https://pay.herospark.com/assinatura-intimatech-503526" class="price-cta" target="_blank">
+        ASSINAR AGORA →
+      </a>
+    </div>
+
+    <p class="price-note">Pagamento seguro · Acesso imediato</p>
+  </div>
+</section>
+
+<div class="footer-social">
+  <a href="https://www.instagram.com/intimatech_plataforma/" class="social-btn" target="_blank" rel="noopener">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+      <circle cx="12" cy="12" r="4"/>
+      <circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/>
+    </svg>
+    @intimatech_plataforma
+  </a>
+  <a href="https://wa.me/5548988399690" class="social-btn" target="_blank" rel="noopener">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+    </svg>
+    Fale pelo WhatsApp
+  </a>
+</div>
+
+<footer>© 2026 · IntimaTech · Todos os direitos reservados</footer>
+
+</body>
+</html>
