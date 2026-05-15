@@ -646,6 +646,18 @@
       mostrarStep('step3');
     } else if (pergunta === 3) {
       mostrarStep('stepSuccess');
+      const eventId = (crypto.randomUUID && crypto.randomUUID()) || (Date.now() + '-' + Math.random().toString(36).slice(2));
+      fetch('/tracker', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          event_name: 'LeadQualificado',
+          event_id: eventId,
+          event_time: Math.floor(Date.now() / 1000),
+          event_source_url: window.location.href,
+          user_data: {}
+        })
+      }).catch(() => {});
     }
   }
 
